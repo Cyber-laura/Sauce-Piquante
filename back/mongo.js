@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require ('mongoose-unique-validator');
 
 mongoose.connect('mongodb+srv://Xenon:OckWD9EywPtj7sVq@clusterex1.0fimueu.mongodb.net/?retryWrites=true&w=majority',
   { useNewUrlParser: true,
@@ -8,9 +9,11 @@ mongoose.connect('mongodb+srv://Xenon:OckWD9EywPtj7sVq@clusterex1.0fimueu.mongod
 
 
 const userSchema = new mongoose.Schema({
-    email: String,
-    password: String
+    email: {type : String, required : true, unique: true},
+    password:{type: String, required: true}
 });
+
+userSchema.plugin(uniqueValidator);
 
 const User = mongoose.model('User', userSchema);
 
