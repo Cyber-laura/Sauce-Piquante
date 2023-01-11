@@ -153,7 +153,7 @@ function likeSauces (req, res){
     const like = req.body.like
     console.log("Fonction like sauce invoqué", {like})
 
-    if (![0, -1, 1].includes(like)) return res.status(403).send({message: "bad request"})
+    if (![0, -1, 1].includes(like)) return res.status(403).send({message: " unauthorized request"})
 
     return Product.findById(id)
     .then((product)=> voteSauces(product, like, userId, res))

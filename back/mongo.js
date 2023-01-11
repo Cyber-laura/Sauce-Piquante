@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require ('mongoose-unique-validator');
+const password = process.env.DB_PASSWORD
+const username = process.env.DB_USER
 
-mongoose.connect('mongodb+srv://Xenon:OckWD9EywPtj7sVq@clusterex1.0fimueu.mongodb.net/?retryWrites=true&w=majority',
+
+mongoose.connect(`mongodb+srv://${username}:${password}@clusterex1.0fimueu.mongodb.net/?retryWrites=true&w=majority`,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
