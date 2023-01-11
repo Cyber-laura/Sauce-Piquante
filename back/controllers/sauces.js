@@ -144,7 +144,7 @@ function sendClientResponse(product, res){
         return res.status(404).send({message : "l'objet n'est pas trouvé"})
     }
     console.log("OK UPDATING:", product)
-    return Promise.resolve(res.status(200).send(product)).then(() => product)
+    return Promise.resolve(res.status(200).send(product)).then(()=> product)
 }
 // La fonction likeSauces prend en entrée une requête HTTP et une réponse. Il incrémente les votes d'un produit en fonction de si c'est un vote positif ou négatif, et envoie une réponse au client. Il utilise la fonction voteSauces pour incrémenter les votes et la fonction resetVote pour vérifier que l'utilisateur n'a pas déjà voté pour ce produit.
 function likeSauces (req, res){
@@ -153,18 +153,18 @@ function likeSauces (req, res){
     const like = req.body.like
     console.log("Fonction like sauce invoqué", {like})
 
-    if (![0, -1, 1].includes(like)) return res.status(400).send({message: "bad request"})
+    if (![0, -1, 1].includes(like)) return res.status(403).send({message: "bad request"})
 
     return Product.findById(id)
     .then((product)=> voteSauces(product, like, userId, res))
     .then(produit => produit.save())
-    .then(prod => sendClientResponse(prod,res))
+    .then((prod) => sendClientResponse(prod,res))
     .catch((err)=> res.status(500).send(err))
 }
 
 // La fonction voteSauces prend en entrée un produit, un vote (positif ou négatif) et un utilisateur, et incrémente les votes en conséquence. Elle utilise la fonction resetVote pour vérifier que l'utilisateur n'a pas déjà voté pour ce produit.
 function voteSauces(product, like, userId, res){
-    if (like === 1 || like === -1) incrementVotes(product, userId, like)
+    if (like === 1 || like === -1) return incrementVotes(product, userId, like)
     return resetVote(product, userId, res)
     // return product.save()
 }
