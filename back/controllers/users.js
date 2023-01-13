@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+const jwtPassword = process.env.JWT_PASS
 
 const { User } = require("../mongo")
 
@@ -36,16 +36,28 @@ function login(req, res) {
                     }
                     res.status(200).json({
                         userId: user._id,
-                        token: jwt.sign(
-                            { userId: user._id },
-                            'RANDOM_TOKEN_SECRET',
-                            { expiresIn: '24h' }
-                        )
+                        email: req.body.email,
+                        token: jwt.sign({ userId: user._id, email: req.body.email  },jwtPassword,{ expiresIn: '24h' } )
                     });
                 })
                 .catch(error => res.status(500).json({ error }));
         })
         .catch(error => res.status(500).json({ error }));
 };
+
+
+// const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%^&*])(?=.{8,})");
+
+// function isStrongPassword(password) {
+//     return strongRegex.test(password);
+// }
+
+// const password = "myP@ssword";
+// if (isStrongPassword(password)) {
+//     console.log("Mot de passe fort");
+// } else {
+//     console.log("Mot de passe faible");
+// }
+
 
 module.exports = { createUser, login };

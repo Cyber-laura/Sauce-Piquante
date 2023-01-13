@@ -4,10 +4,11 @@ const { app, express } = require("./server")
 const {saucesRouter} = require("./routers/sauces.router")
 const {authRouter} = require("./routers/auth.router")
 
-const port = 3000
 const path = require('path')
 const bodyParser = require("body-parser")
 
+const http = require('http');
+http.createServer(app);
 
 
 // Connexion à MongoDB
@@ -26,7 +27,8 @@ app.get('/', (req, res) => { res.send('Hello Worl!') });
 
 //Listen
 app.use('/images', express.static(path.join(__dirname, "images")))
-app.listen(port, () => { console.log('Example app listening on port' + port) });
+
+app.listen(process.env.PORT, () => { console.log('Example app listening on port' + process.env.PORT) });
 
 
 

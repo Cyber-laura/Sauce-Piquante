@@ -8,7 +8,7 @@ function loginUser(req, res, next) {
     const token = header.split(" ")[1]
     if (token == null) return res.status(403).send({ message: "token cannot be null" })
 
-    jwt.verify(token, "RANDOM_TOKEN_SECRET", (err, decoded) => {
+    jwt.verify(token, process.env.JWT_PASS, (err, decoded) => {
         if (err) return res.status(403).send({ message: "token invalid" + err })
         console.log("le token est valide continuons !")
         next()
