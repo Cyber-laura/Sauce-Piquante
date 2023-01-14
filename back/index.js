@@ -8,7 +8,7 @@ const path = require('path')
 const bodyParser = require("body-parser")
 
 const http = require('http');
-http.createServer(app);
+const server = http.createServer(app);
 
 
 // Connexion à MongoDB
@@ -28,7 +28,7 @@ app.get('/', (req, res) => { res.send('Hello Worl!') });
 //Listen
 app.use('/images', express.static(path.join(__dirname, "images")))
 
-app.listen(process.env.PORT, () => { console.log('Example app listening on port' + process.env.PORT) });
+server.listen(process.env.PORT, () => { console.log('Example app listening on port' + process.env.PORT) });
 
 
 
