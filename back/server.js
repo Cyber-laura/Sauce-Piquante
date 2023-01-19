@@ -1,11 +1,6 @@
 const express = require('express');
-
-
 const app = express();
 const cors = require("cors");
-
-
-
 
 app.use(cors());
 app.use((req, res, next) => {
@@ -16,6 +11,4 @@ app.use((req, res, next) => {
 });
 app.use(express.json())
 
-
-
-module.exports = {app, express}
+module.exports = { app, express }
